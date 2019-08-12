@@ -365,6 +365,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Plugins\carbonFootprints\backoffice\carbonFootprints\delete.html" />
+    <Content Include="App_Plugins\carbonFootprints\backoffice\carbonFootprints\edit.html" />
     <Content Include="App_Plugins\ModelsBuilder\modelsbuilder.controller.js" />
     <Content Include="App_Plugins\ModelsBuilder\modelsbuilder.htm" />
     <Content Include="App_Plugins\ModelsBuilder\modelsbuilder.resource.js" />
@@ -392,6 +394,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Code\CarbonFootprintsTreeController.cs" />
     <Compile Include="App_Start\UmbracoEvents.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
