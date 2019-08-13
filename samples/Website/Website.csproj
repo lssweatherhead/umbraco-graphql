@@ -452,6 +452,10 @@
       <Project>{59294783-3a17-479b-90c5-a3a2967176de}</Project>
       <Name>Our.Umbraco.GraphQL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Website.Data\Website.Data.csproj">
+      <Project>{041A616B-9ED3-436D-8EF8-4AAEF84FCE37}</Project>
+      <Name>Website.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>

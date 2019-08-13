@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Our.Umbraco.GraphQL", "src\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Our.Umbraco.GraphQL.Tests", "test\Our.Umbraco.GraphQL.Tests\Our.Umbraco.GraphQL.Tests.csproj", "{9CC632BF-46A8-4BA6-B51F-CDFF3A935974}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Website.Core", "Website.Core\Website.Core.csproj", "{D678F0F3-E6B5-4A88-9DA3-0C4C1DF1BD1A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Website.Core", "Website.Core\Website.Core.csproj", "{D678F0F3-E6B5-4A88-9DA3-0C4C1DF1BD1A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Website.Data", "Website.Data\Website.Data.csproj", "{041A616B-9ED3-436D-8EF8-4AAEF84FCE37}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,6 +38,10 @@ Global
 		{D678F0F3-E6B5-4A88-9DA3-0C4C1DF1BD1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D678F0F3-E6B5-4A88-9DA3-0C4C1DF1BD1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D678F0F3-E6B5-4A88-9DA3-0C4C1DF1BD1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{041A616B-9ED3-436D-8EF8-4AAEF84FCE37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{041A616B-9ED3-436D-8EF8-4AAEF84FCE37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{041A616B-9ED3-436D-8EF8-4AAEF84FCE37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{041A616B-9ED3-436D-8EF8-4AAEF84FCE37}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -44,6 +50,7 @@ Global
 		{C2001952-0774-4BFA-AF30-043B3B16D275} = {D56E0413-4D79-45DF-BECA-09D6732637F5}
 		{59294783-3A17-479B-90C5-A3A2967176DE} = {BE019E17-BF39-443C-8D62-74940D3B6560}
 		{D678F0F3-E6B5-4A88-9DA3-0C4C1DF1BD1A} = {D56E0413-4D79-45DF-BECA-09D6732637F5}
+		{041A616B-9ED3-436D-8EF8-4AAEF84FCE37} = {D56E0413-4D79-45DF-BECA-09D6732637F5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E20ED350-4522-4159-8FDC-A80A46E7DD7F}
