@@ -367,6 +367,7 @@
   <ItemGroup>
     <Content Include="App_Plugins\carbonFootprints\backoffice\carbonFootprints\delete.html" />
     <Content Include="App_Plugins\carbonFootprints\backoffice\carbonFootprints\edit.html" />
+    <Content Include="App_Plugins\carbonFootprints\controllers\editcontroller.js" />
     <Content Include="App_Plugins\ModelsBuilder\modelsbuilder.controller.js" />
     <Content Include="App_Plugins\ModelsBuilder\modelsbuilder.htm" />
     <Content Include="App_Plugins\ModelsBuilder\modelsbuilder.resource.js" />
@@ -396,6 +397,7 @@
   <ItemGroup>
     <Content Include="App_Code\CarbonFootprintsTreeController.cs" />
     <Compile Include="App_Start\UmbracoEvents.cs" />
+    <Compile Include="Controllers\Api\CarbonFootprintApiController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -423,6 +425,7 @@
     <Content Include="config\applications.config" />
     <Content Include="config\404handlers.config" />
     <None Include=".gitignore" />
+    <Content Include="App_Plugins\carbonFootprints\package.manifest" />
     <None Include="packages.config" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Partials\Grid\Editors\Textstring.cshtml" />
@@ -461,6 +464,9 @@
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>App_Plugins\carbonFootprints\package.manifest</ApplicationManifest>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />

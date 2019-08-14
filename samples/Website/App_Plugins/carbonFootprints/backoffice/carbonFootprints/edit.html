@@ -1,62 +1,36 @@
-<div ng-controller="UmbGQLDemo.EditCarbonFootprint.Controller">
+<div ng-controller="UmbGQLDemo.EditCarbonFootprint.Controller" class="container">
+
+
+
+
     <div class="umb-panel-header">
         <div class="umb-panel-header-content-wrapper">
             <div class="umb-panel-header-content">
                 <div class="umb-panel-header-left-side">
                     <div class="umb-panel-header-title-wrapper">
-                        <div class="umb-panel-header-name">{{item.name}}</div>
+                        <div class="umb-panel-header-name">{{itemName}}</div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="umb-editor-container umb-panel-body umb-scrollable row-fluid" ng-show="pokemon">
-        <div class="umb-pane">
-            <div class="form-horizontal">
-                <div class="umb-property">
-                    <div class="control-group umb-control-group">
-                        <div class="umb-el-wrap">
-                            <label class="control-label">Id</label>
-                            <div class="umb-property-editor">{{pokemon.id}}</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="umb-property">
-                    <div class="control-group umb-control-group">
-                        <div class="umb-el-wrap">
-                            <label class="control-label">Kind</label>
-                            <div class="umb-property-editor">{{pokemon.kind}}</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="umb-property">
-                    <div class="control-group umb-control-group">
-                        <div class="umb-el-wrap">
-                            <label class="control-label">Type(s)</label>
-                            <div class="umb-property-editor">
-                                <span ng-repeat="type in pokemon.type">
-                                    <span style="text-decoration: underline;">{{type}}</span>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="umb-property">
-                    <div class="control-group umb-control-group">
-                        <div class="umb-el-wrap">
-                            <label class="control-label">Image</label>
-                            <div class="umb-property-editor">
-                                <div style="margin-left: 170px;">
-                                    <img ng-src="/images/pokemon/{{pokemon.kind}}_large.png" alt="" />
-                                    <div style="font-size: 11px; color: #666; font-style: italic;">
-                                        Image from http://pokemon.wikia.com/wiki/{{pokemon.kind}}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
+    <div class="umb-panel-body umb-scrollable row-fluid">
+        <!--<div class="" ng-repeat="variant in variants">
+            <div class="col-sm-8">
+                {{ variant.name }}
             </div>
-        </div>
+            <div class="col-sm-4">
+                {{ variant.co2e }}
+            </div>
+        </div>-->
+
+        <umb-box ng-repeat="variant in variants">
+            <umb-box-header title="{{ variant.name }}"></umb-box-header>
+            <umb-box-content>
+                Carbon Dioxide Equivalent (CO2e) [grams]: <b>{{ variant.co2e }}g</b>
+            </umb-box-content>
+        </umb-box>
     </div>
+
 </div>
