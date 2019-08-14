@@ -23,7 +23,11 @@ namespace Website.Data.Models
         [ForeignKey(typeof(ItemType), Name = "FK_Item_TypeId")]
         public int ItemType { get; set; }
 
-        [Column("CO2E")]
-        public double CarbonDioxideEquivalent { get; set; }
+        [Column("MinCO2eGrams")]
+        public double MinCarbonDioxideEquivalent { get; set; }
+
+        [Column("MaxCO2eGrams")]
+        [NullSetting(NullSetting = NullSettings.Null)]
+        public double MaxCarbonDioxideEquivalent { get; set; }
     }
 }

@@ -6,9 +6,11 @@ using System.Web;
 using System.Web.Http;
 using umbraco;
 using umbraco.BusinessLogic.Actions;
+using Umbraco.Core.Persistence;
 using Umbraco.Web.Models.Trees;
 using Umbraco.Web.Mvc;
 using Umbraco.Web.Trees;
+using Website.Data.Models;
 
 namespace Website.App_Code
 {
@@ -18,19 +20,15 @@ namespace Website.App_Code
     {
         protected override MenuItemCollection GetMenuForNode(string id, FormDataCollection queryStrings)
         {
-            // create a Menu Item Collection to return so people can interact with the nodes in your tree
             var menu = new MenuItemCollection();
 
             if (id == "-1")
             {
-                // root actions, perhaps users can create new items in this tree, or perhaps it's not a content tree, it might be a read only tree, or each node item might represent something entirely different...
-                // add your menu items here following the pattern of <Umbraco.Web.Models.Trees.ActionMenuItem,umbraco.interfaces.IAction>
-                menu.Items.Add<CreateChildEntity, ActionNew>(ui.Text("actions", ActionNew.Instance.Alias));
-                // add refresh menu item            
+                menu.Items.Add<CreateChildEntity, ActionNew>(ui.Text("actions", ActionNew.Instance.Alias));         
                 menu.Items.Add<RefreshNode, ActionRefresh>(ui.Text("actions", ActionRefresh.Instance.Alias), true);
                 return menu;
             }
-            // add a delete action to each individual item
+
             menu.Items.Add<ActionDelete>(ui.Text("actions", ActionDelete.Instance.Alias));
 
             return menu;
@@ -38,40 +36,66 @@ namespace Website.App_Code
 
         protected override TreeNodeCollection GetTreeNodes(string id, FormDataCollection queryStrings)
         {
+            var dbContext = ApplicationContext.DatabaseContext;
+            var db = dbContext.Database;
+
+            // create our node collection
+            var nodes = new TreeNodeCollection();
+
             // check if we're rendering the root node's children
             if (id == "-1")
             {
-                // you can get your custom nodes from anywhere, and they can represent anything... 
-                var categories = new List<NodeItem>
-                {
-                    new NodeItem(1, "Clothing", "t-shirt"),
-                    new NodeItem(2, "Travel", "plane"),
-                    new NodeItem(3, "Food", "food"),
-                    new NodeItem(4, "Electricals", "lightbulb"),
-                    new NodeItem(5, "Furniture", "reception"),
-                    new NodeItem(6, "Activities", "sandbox-toys")
-                };
+                var itemTypesQry = new Sql()
+                        .Select("*")
+                        .From<ItemType>(dbContext.SqlSyntax);
 
-                // create our node collection
-                var nodes = new TreeNodeCollection();
+                var itemTypes = db.Fetch<ItemType>(itemTypesQry);
+                var categories = itemTypes.Select(x => new NodeItem(x.Id, x.Name, GetIcon(x.Name)));
 
-                // loop through our favourite things and create a tree item for each one
                 foreach (var thing in categories)
                 {
-                    // add each node to the tree collection using the base CreateTreeNode method
-                    // it has several overloads, using here unique Id of tree item, -1 is the Id of the parent node to create, eg the root of this tree is -1 by convention - the querystring collection passed into this route - the name of the tree node -  css class of icon to display for the node - and whether the item has child nodes
-                    var node = CreateTreeNode(thing.Id.ToString(), thing.ParentId.ToString(), queryStrings, thing.Title, string.Format("icon-{0}", thing.Icon), false);
+                    var node = CreateTreeNode(thing.Id.ToString(), thing.ParentId.ToString(), queryStrings, thing.Title, string.Format("icon-{0}", thing.Icon), true);
                     nodes.Add(node);
+                }             
+            }
+            else
+            {
+                var parsedId = int.Parse(id);
+                var itemQry = new Sql().Select("*").From<Item>(dbContext.SqlSyntax).Where<Item>(i => i.ItemType == parsedId, dbContext.SqlSyntax);
+                var items = db.Fetch<Item>(itemQry);
 
+                foreach (var item in items)
+                {
+                    nodes.Add(CreateTreeNode(item.Id.ToString(), id, queryStrings, item.ItemName, "icon-footprints"));
                 }
-                return nodes;
             }
 
-            // this tree doesn't support rendering more than 1 level
-            throw new NotSupportedException();
+            return nodes;
+
         }
 
-
+        private string GetIcon(string name)
+        {
+            switch (name)
+            {
+                case "Clothing":
+                    return "t-shirt";
+                case "Travel":
+                    return "plane";
+                case "Food":
+                    return "food";
+                case "Electricals":
+                    return "lightbulb";
+                case "Utilities":
+                    return "umb-settings";
+                case "Furniture":
+                    return "reception";
+                case "Activities":
+                    return "sandbox-toys";
+                default:
+                    return "tv";
+            }
+        }
     }
 
     public class NodeItem
