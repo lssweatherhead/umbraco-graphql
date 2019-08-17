@@ -3,15 +3,15 @@ using Umbraco.Core.Models.PublishedContent;
 
 namespace Our.Umbraco.GraphQL.ValueResolvers
 {
-    public abstract class GraphQLValueResolver : IGraphQLValueResolver
+    public abstract class GraphQLValueResolver<T> : IGraphQLValueResolver<T> where T: class
     {
-        public abstract Type GetGraphQLType(PublishedPropertyType propertyType);
+        public abstract Type GetGraphQLType(T propertyType);
 
-        public virtual object Resolve(PublishedPropertyType propertyType, object value)
+        public virtual object Resolve(T propertyType, object value)
         {
             return value;
         }
 
-        public abstract bool IsResolver(PublishedPropertyType propertyType);
+        public abstract bool IsResolver(T propertyType);
     }
 }

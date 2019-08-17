@@ -6,7 +6,7 @@ using Umbraco.Core.Models.PublishedContent;
 namespace Our.Umbraco.GraphQL.ValueResolvers
 {
     [DefaultGraphQLValueResolver]
-    public class StringValueResolver : GraphQLValueResolver
+    public class StringValueResolver : GraphQLValueResolver<PublishedPropertyType>
     {
         public override Type GetGraphQLType(PublishedPropertyType propertyType)
         {

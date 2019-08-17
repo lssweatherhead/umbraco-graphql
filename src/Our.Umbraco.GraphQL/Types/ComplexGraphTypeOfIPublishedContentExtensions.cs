@@ -155,7 +155,7 @@ namespace Our.Umbraco.GraphQL.Types
 
                 var publishedPropertyType = publishedContentType.GetPropertyType(property.Alias);
 
-                var resolver = GetValueResolver(contentType, publishedPropertyType);
+                var resolver = GetValueResolver<PublishedPropertyType>(contentType, publishedPropertyType);
 
                 var propertyGraphType = resolver.GetGraphQLType(publishedPropertyType);
 
@@ -181,10 +181,10 @@ namespace Our.Umbraco.GraphQL.Types
             return graphType;
         }
 
-        private static IGraphQLValueResolver GetValueResolver(IContentTypeComposition contentType, PublishedPropertyType propertyType)
+        private static IGraphQLValueResolver<PublishedPropertyType> GetValueResolver<T>(IContentTypeComposition contentType, PublishedPropertyType propertyType) where T:class
         {
-            var foundResolvers = GraphQLValueResolversResolver.Current.Resolvers.Where(r => r.IsResolver(propertyType)).ToList();
-            var defaultResolvers = GraphQLValueResolversResolver.Current.DefaultResolvers;
+            var foundResolvers = GraphQLValueResolversResolver<PublishedPropertyType>.Current.Resolvers.Where(r => r.IsResolver(propertyType)).ToList();
+            var defaultResolvers = GraphQLValueResolversResolver<PublishedPropertyType>.Current.DefaultResolvers;
 
             if (foundResolvers.Count == 1)
             {
@@ -209,7 +209,7 @@ namespace Our.Umbraco.GraphQL.Types
             }
 
             //no resolvers registered so we use the fallback resolver
-            return GraphQLValueResolversResolver.Current.FallbackResolver;
+            return GraphQLValueResolversResolver<PublishedPropertyType>.Current.FallbackResolver;
         }
     }
 }

@@ -11,7 +11,7 @@ using Umbraco.Core.Services;
 namespace Our.Umbraco.GraphQL.ValueResolvers
 {
     [DefaultGraphQLValueResolver]
-    public class PublishedContentValueResolver : GraphQLValueResolver
+    public class PublishedContentValueResolver : GraphQLValueResolver<PublishedPropertyType>
     {
         private readonly IDataTypeService _dataTypeService;
 

@@ -9,11 +9,11 @@ using Umbraco.Core.ObjectResolution;
 
 namespace Our.Umbraco.GraphQL.ValueResolvers
 {
-    public class GraphQLValueResolversResolver : ManyObjectsResolverBase<GraphQLValueResolversResolver, IGraphQLValueResolver>
+    public class GraphQLValueResolversResolver<T> : ManyObjectsResolverBase<GraphQLValueResolversResolver<T>, IGraphQLValueResolver<T>> where T:class
     {
         private readonly ReaderWriterLockSlim _lock = new ReaderWriterLockSlim();
-        private Tuple<IGraphQLValueResolver, DefaultGraphQLValueResolverAttribute>[] _defaults = null;
-        private IGraphQLValueResolver _fallback = null;
+        private Tuple<IGraphQLValueResolver<T>, DefaultGraphQLValueResolverAttribute>[] _defaults = null;
+        private IGraphQLValueResolver<T> _fallback = null;
 
         internal GraphQLValueResolversResolver(IServiceProvider serviceProvider, ILogger logger,
             IEnumerable<Type> value, ObjectLifetimeScope scope = ObjectLifetimeScope.Application) : base(
@@ -21,12 +21,12 @@ namespace Our.Umbraco.GraphQL.ValueResolvers
         {
         }
 
-        public IEnumerable<IGraphQLValueResolver> Resolvers => Values;
+        public IEnumerable<IGraphQLValueResolver<T>> Resolvers => Values;
 
         /// <summary>
         /// Caches and gets the default resolvers with their metadata
         /// </summary>
-        internal Tuple<IGraphQLValueResolver, DefaultGraphQLValueResolverAttribute>[] DefaultResolvers
+        internal Tuple<IGraphQLValueResolver<T>, DefaultGraphQLValueResolverAttribute>[] DefaultResolvers
         {
             get
             {
@@ -47,7 +47,7 @@ namespace Our.Umbraco.GraphQL.ValueResolvers
 
                         _defaults = defaultResolverWithAttributes
                             .Select(
-                                x => new Tuple<IGraphQLValueResolver, DefaultGraphQLValueResolverAttribute>(x.resolver, x.attribute))
+                                x => new Tuple<IGraphQLValueResolver<T>, DefaultGraphQLValueResolverAttribute>(x.resolver, x.attribute))
                             .ToArray();
                     }
 
@@ -59,7 +59,7 @@ namespace Our.Umbraco.GraphQL.ValueResolvers
         /// <summary>
         /// Caches and gets the fallback resolver
         /// </summary>
-        internal IGraphQLValueResolver FallbackResolver
+        internal IGraphQLValueResolver<T> FallbackResolver
         {
             get
             {

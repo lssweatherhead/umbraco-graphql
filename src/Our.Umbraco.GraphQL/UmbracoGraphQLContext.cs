@@ -19,6 +19,7 @@ namespace Our.Umbraco.GraphQL
 
             RequestUri = requestUri;
             ApplicationContext = applicationContext ?? throw new ArgumentNullException(nameof(applicationContext));
+            DatabaseContext = applicationContext?.DatabaseContext ?? throw new ArgumentNullException(nameof(applicationContext));
             Options = options ?? throw new ArgumentNullException(nameof(options));
             UmbracoContext = umbracoContext ?? throw new ArgumentNullException(nameof(umbracoContext));
             Claims = new List<string>(); // no claims is the default
@@ -75,6 +76,7 @@ namespace Our.Umbraco.GraphQL
         }
 
         public ApplicationContext ApplicationContext { get; }
+        public DatabaseContext DatabaseContext { get; }
         public GraphQLServerOptions Options { get; }
         public Uri RequestUri { get; }
         public UmbracoHelper Umbraco => _umbraco ?? (_umbraco = new UmbracoHelper(UmbracoContext));

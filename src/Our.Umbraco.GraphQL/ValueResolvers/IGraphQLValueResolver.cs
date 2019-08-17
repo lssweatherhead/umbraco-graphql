@@ -3,11 +3,11 @@ using Umbraco.Core.Models.PublishedContent;
 
 namespace Our.Umbraco.GraphQL.ValueResolvers
 {
-    public interface IGraphQLValueResolver
+    public interface IGraphQLValueResolver<in T> where T : class
     {
-        Type GetGraphQLType(PublishedPropertyType propertyType);
-        bool IsResolver(PublishedPropertyType propertyType);
+        Type GetGraphQLType(T propertyType);
+        bool IsResolver(T propertyType);
         //TODO: Provide context?
-        object Resolve(PublishedPropertyType propertyType, object value);
+        object Resolve(T propertyType, object value);
     }
 }

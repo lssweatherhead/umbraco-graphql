@@ -2,6 +2,7 @@ using System;
 using System.Web.Mvc;
 using Our.Umbraco.GraphQL.ValueResolvers;
 using Umbraco.Core;
+using Umbraco.Core.Models.PublishedContent;
 using Umbraco.Web.Cache;
 
 namespace Our.Umbraco.GraphQL
@@ -10,11 +11,13 @@ namespace Our.Umbraco.GraphQL
     {
         protected override void ApplicationInitialized(UmbracoApplicationBase umbracoApplication, ApplicationContext applicationContext)
         {
-            GraphQLValueResolversResolver.Current = new GraphQLValueResolversResolver(
+            GraphQLValueResolversResolver<PublishedPropertyType>.Current = new GraphQLValueResolversResolver<PublishedPropertyType>(
                 new ServiceProvider(),
                 applicationContext.ProfilingLogger.Logger,
-                PluginManager.Current.ResolveTypes<IGraphQLValueResolver>()
+                PluginManager.Current.ResolveTypes<IGraphQLValueResolver<PublishedPropertyType>> ()
             );
+
+
 
             DataTypeCacheRefresher.CacheUpdated += (s, e) => ClearSchemaCache(applicationContext);
             ContentTypeCacheRefresher.CacheUpdated += (s, e) => ClearSchemaCache(applicationContext);

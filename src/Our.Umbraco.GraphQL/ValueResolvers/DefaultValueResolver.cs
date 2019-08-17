@@ -4,7 +4,7 @@ using Umbraco.Core.Models.PublishedContent;
 
 namespace Our.Umbraco.GraphQL.ValueResolvers
 {
-    public class DefaultValueResolver : GraphQLValueResolver
+    public class DefaultValueResolver : GraphQLValueResolver<PublishedPropertyType>
     {
         public override object Resolve(PublishedPropertyType propertyType, object value)
         {

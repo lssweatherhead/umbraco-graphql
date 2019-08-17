@@ -92,7 +92,6 @@ namespace Our.Umbraco.GraphQL.Schema
 
             foreach (var contentType in compositions)
             {
-
                 var graphType = new PublishedContentCompositionGraphType(contentType, publishedItemType);
                 yield return graphType;
                 interfaceGraphTypes.Add(contentType.Alias, graphType);
