@@ -1,14 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using GraphQL;
 using GraphQL.Conversion;
-using GraphQL.Resolvers;
 using GraphQL.Types;
 using Our.Umbraco.GraphQL.Types;
+using Our.Umbraco.GraphQL.Types.Custom;
 using Our.Umbraco.GraphQL.Web;
+using Umbraco.Core;
 using Umbraco.Core.Models;
 using Umbraco.Core.Services;
+using Website.Core.Services;
 
 namespace Our.Umbraco.GraphQL.Schema
 {
@@ -18,6 +19,7 @@ namespace Our.Umbraco.GraphQL.Schema
         public UmbracoSchema(
             IContentTypeService contentTypeService,
             IMemberTypeService memberTypeService,
+            DatabaseContext dbContext,
             GraphQLServerOptions options)
         {
             if (contentTypeService == null)
@@ -76,7 +78,23 @@ namespace Our.Umbraco.GraphQL.Schema
             RegisterTypes(mediaTypes.ToArray());
             // RegisterTypes(memberTypeService.GetAll().CreateGraphTypes(PublishedItemType.Member, resolveName).ToArray());
 
-            Query = new UmbracoQuery(documentTypes);
+            var carbonFootprintTypes = CreateCustomGraphTypes(dbContext).ToList();
+            RegisterTypes(carbonFootprintTypes.ToArray());
+
+            Query = new UmbracoQuery(documentTypes, carbonFootprintTypes);
+        }
+
+        private IEnumerable<IGraphType> CreateCustomGraphTypes(DatabaseContext dbContext)
+        {
+            var graphTypes = new List<IGraphType>();
+            var cats = dbContext.GetAllCategories();
+
+            foreach (var cat in cats)
+            {
+                graphTypes.Add(new CarbonFootprintGraphTypeMap(dbContext, cat));
+            }
+
+            return graphTypes;
         }
 
         public static IEnumerable<IGraphType> CreateGraphTypes(

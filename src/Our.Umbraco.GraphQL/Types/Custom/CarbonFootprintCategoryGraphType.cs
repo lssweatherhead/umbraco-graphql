@@ -1,9 +1,6 @@
 using GraphQL.Types;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Umbraco.Core;
+using Website.Core.Services;
 using Website.Data.Models;
 
 namespace Our.Umbraco.GraphQL.Types.Custom
@@ -20,6 +17,10 @@ namespace Our.Umbraco.GraphQL.Types.Custom
             Field<NonNullGraphType<StringGraphType>>(
                 "name",
                 resolve: context => context.Source.Name
+            );
+            Field<NonNullGraphType<ListGraphType<CarbonFootprintItemGraphType>>>(
+                "items",
+                resolve: context => ApplicationContext.Current.DatabaseContext.GetItemsByCategoryId(context.Source.Id)
             );
         }
     }
